@@ -54,6 +54,7 @@ import org.springframework.web.context.ServletContextAware;
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see org.springframework.ui.context.ThemeSource
+ * 此类只用来测试使用，不能用于生产环境
  */
 public class StaticWebApplicationContext extends StaticApplicationContext
 		implements ConfigurableWebApplicationContext, ThemeSource {

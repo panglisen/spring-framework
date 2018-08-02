@@ -25,6 +25,10 @@ import java.util.Map;
  * conversion service and more through the {@link ConfigurablePropertyResolver}
  * superinterface.
  *
+ * 配置接口将由大多数(如果不是全部){@link Environment}类型实现。提供设置活动和默认配置文件和操
+ * 作底层属性源的工具。允许客户端通过{@link ConfigurablePropertyResolver} 父接口
+ * 来设置和验证所需的属性、定制转换服务等。
+ *
  * <h2>Manipulating property sources</h2>
  * <p>Property sources may be removed, reordered, or replaced; and additional
  * property sources may be added using the {@link MutablePropertySources}
@@ -68,6 +72,10 @@ import java.util.Map;
  * @since 3.1
  * @see StandardEnvironment
  * @see org.springframework.context.ConfigurableApplicationContext#getEnvironment
+ * 提供ApplicationContext上下文所需的环境（大部分情况使用ConfigurableEnvironment即可）
+ * ConfigurablePropertyResolver 用于验证配置文件
+ * Environment 自定义环境
+ * 提供设置 active profiles 和 default profiles （用于不同的环境开发的不同配置）以及 操作底层属性资源 的 设施；
  */
 public interface ConfigurableEnvironment extends Environment, ConfigurablePropertyResolver {
 

@@ -51,6 +51,8 @@ import org.springframework.util.StringUtils;
  * @since 3.1
  * @see ConfigurableEnvironment
  * @see StandardEnvironment
+ *
+ * 对环境配置接口定义的方法进行了默认实现
  */
 public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 
@@ -74,6 +76,7 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 	 * is in use, this property may be specified as an environment variable as
 	 * {@code SPRING_PROFILES_ACTIVE}.
 	 * @see ConfigurableEnvironment#setActiveProfiles
+	 * 区分环境的key如：spring.profiles.active=dev（会根据此key获取所有属于dev环境的配置文件）
 	 */
 	public static final String ACTIVE_PROFILES_PROPERTY_NAME = "spring.profiles.active";
 
@@ -85,6 +88,7 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 	 * is in use, this property may be specified as an environment variable as
 	 * {@code SPRING_PROFILES_DEFAULT}.
 	 * @see ConfigurableEnvironment#setDefaultProfiles
+	 * 默认环境的key
 	 */
 	public static final String DEFAULT_PROFILES_PROPERTY_NAME = "spring.profiles.default";
 
@@ -103,6 +107,7 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	//分环境下所有配置文件的集合（如开发环境所有配置文件的集合）
 	private final Set<String> activeProfiles = new LinkedHashSet<>();
 
 	private final Set<String> defaultProfiles = new LinkedHashSet<>(getReservedDefaultProfiles());
@@ -119,6 +124,7 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 	 * allow subclasses to contribute or manipulate {@link PropertySource} instances as
 	 * appropriate.
 	 * @see #customizePropertySources(MutablePropertySources)
+	 * 当对象被创建时初始化一些默认配置信息，此处是当StandardEnvironment，StandardServletEnvironment初始化时被调用
 	 */
 	public AbstractEnvironment() {
 		customizePropertySources(this.propertySources);

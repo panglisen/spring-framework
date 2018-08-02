@@ -41,6 +41,8 @@ import org.springframework.lang.Nullable;
  * @author Juergen Hoeller
  * @since January 19, 2001
  * @see ServletContextAware#setServletContext
+ *
+ * 主要用于web容器的配置
  */
 public interface WebApplicationContext extends ApplicationContext {
 

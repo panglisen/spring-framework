@@ -41,6 +41,7 @@ import org.springframework.util.ObjectUtils;
  * @author Juergen Hoeller
  * @since 3.1
  * @param <T> the source type
+ *增加了一个方法用于返回所有name值getPropertyNames，同时重写的containsProperty方法，通过getPropertyNames返回的key值进行判断，有助于提升性能
  */
 public abstract class EnumerablePropertySource<T> extends PropertySource<T> {
 

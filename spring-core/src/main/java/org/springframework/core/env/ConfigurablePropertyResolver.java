@@ -27,6 +27,8 @@ import org.springframework.lang.Nullable;
  *
  * @author Chris Beams
  * @since 3.1
+ *
+ * ApplicationContext上下文配置文件解析器总接口，用于验证配置文件
  */
 public interface ConfigurablePropertyResolver extends PropertyResolver {
 

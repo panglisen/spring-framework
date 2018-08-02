@@ -50,6 +50,8 @@ package org.springframework.core.env;
  * @see ConfigurableEnvironment
  * @see SystemEnvironmentPropertySource
  * @see org.springframework.web.context.support.StandardServletEnvironment
+ *
+ * 默认的系统（system）环境配置信息，也就是java中配置的配置文件
  */
 public class StandardEnvironment extends AbstractEnvironment {
 
@@ -72,6 +74,7 @@ public class StandardEnvironment extends AbstractEnvironment {
 	 * @see AbstractEnvironment#customizePropertySources(MutablePropertySources)
 	 * @see #getSystemProperties()
 	 * @see #getSystemEnvironment()
+	 * 此处采用父类定义抽象方法，子类实现，然后父类调用（模板的设计模式），加载系统配置文件
 	 */
 	@Override
 	protected void customizePropertySources(MutablePropertySources propertySources) {

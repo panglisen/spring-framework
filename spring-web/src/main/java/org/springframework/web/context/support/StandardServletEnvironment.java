@@ -41,6 +41,7 @@ import org.springframework.web.context.ConfigurableWebEnvironment;
  * @author Chris Beams
  * @since 3.1
  * @see StandardEnvironment
+ * 默认的web环境配置信息类，用于web环境默认初始化，加载web环境所需的配置信息
  */
 public class StandardServletEnvironment extends StandardEnvironment implements ConfigurableWebEnvironment {
 
@@ -79,6 +80,7 @@ public class StandardServletEnvironment extends StandardEnvironment implements C
 	 * @see org.springframework.jndi.JndiPropertySource
 	 * @see org.springframework.context.support.AbstractApplicationContext#initPropertySources
 	 * @see #initPropertySources(ServletContext, ServletConfig)
+	 * 此处采用父类定义抽象方法，子类实现，然后父类调用（模板的设计模式），加载web环境需要的配置文件
 	 */
 	@Override
 	protected void customizePropertySources(MutablePropertySources propertySources) {
@@ -92,6 +94,7 @@ public class StandardServletEnvironment extends StandardEnvironment implements C
 
 	@Override
 	public void initPropertySources(@Nullable ServletContext servletContext, @Nullable ServletConfig servletConfig) {
+		//初始化配置文件（默认的5种配置文件），同时把servletContext和servletConfig配置信息加载到sources
 		WebApplicationContextUtils.initServletPropertySources(getPropertySources(), servletContext, servletConfig);
 	}
 

@@ -100,7 +100,15 @@ import org.springframework.util.ReflectionUtils;
  * <h2>See Also</h2>
  * See {@link WebApplicationInitializer} Javadoc for examples and detailed usage
  * recommendations.<p>
- *
+ * *应用程序类路径上的实现。<p>因为这个类声明了@ {@ HandlesTypes（WebApplicationInitializer.class）}，
+ * 	 * Servlet 3.0+容器将自动扫描类路径以获取Spring的{@code WebApplicationInitializer}接口的实现，并提供
+ * 	 * 一组所有这些类型到此方法的{@code webAppInitializerClasses}参数。 <p>如果在类路径上找不到{@code WebApplicationInitializer}实现，
+ * 	 * 则此方法实际上是无操作。将发出INFO级别的日志消息，通知用户确实已调用{@code ServletContainerInitializer}，
+ * 	 * 但未找到{@code WebApplicationInitializer}实现。 <p>假设检测到一个或多个{@code WebApplicationInitializer}类型，
+ * 	 * 它们将被实例化（如果@ {@ link org.springframework.core.annotation.Order @Order}注释，则<em>排序</ em>
+ * 	 * 存在或已实现{@link org.springframework.core.Ordered Ordered}接口）。然后将在每个实例上调用{@link WebApplicationInitializer＃onStartup（ServletContext）}方法，
+ * 	 * 委托{@code ServletContext}，以便每个实例可以注册和配置Servlet，例如Spring的{@code DispatcherServlet}，
+ * 	 * 监听器如Spring的{ @code ContextLoaderListener}，或任何其他Servlet API组件，如过滤器。
  * @author Chris Beams
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev
@@ -137,15 +145,6 @@ public class SpringServletContainerInitializer implements ServletContainerInitia
 	 * @param servletContext the servlet context to be initialized
 	 * @see WebApplicationInitializer#onStartup(ServletContext)
 	 * @see AnnotationAwareOrderComparator
-	 * 应用程序类路径上的实现。<p>因为这个类声明了@ {@ HandlesTypes（WebApplicationInitializer.class）}，
-	 * Servlet 3.0+容器将自动扫描类路径以获取Spring的{@code WebApplicationInitializer}接口的实现，并提供
-	 * 一组所有这些类型到此方法的{@code webAppInitializerClasses}参数。 <p>如果在类路径上找不到{@code WebApplicationInitializer}实现，
-	 * 则此方法实际上是无操作。将发出INFO级别的日志消息，通知用户确实已调用{@code ServletContainerInitializer}，
-	 * 但未找到{@code WebApplicationInitializer}实现。 <p>假设检测到一个或多个{@code WebApplicationInitializer}类型，
-	 * 它们将被实例化（如果@ {@ link org.springframework.core.annotation.Order @Order}注释，则<em>排序</ em>
-	 * 存在或已实现{@link org.springframework.core.Ordered Ordered}接口）。然后将在每个实例上调用{@link WebApplicationInitializer＃onStartup（ServletContext）}方法，
-	 * 委托{@code ServletContext}，以便每个实例可以注册和配置Servlet，例如Spring的{@code DispatcherServlet}，
-	 * 监听器如Spring的{ @code ContextLoaderListener}，或任何其他Servlet API组件，如过滤器。
 	 */
 	@Override
 	public void onStartup(@Nullable Set<Class<?>> webAppInitializerClasses, ServletContext servletContext)

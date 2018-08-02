@@ -27,6 +27,9 @@ import org.springframework.lang.Nullable;
  * Supported by {@link ContextLoader} and
  * {@link org.springframework.web.servlet.FrameworkServlet}.
  *
+ *	可配置的web应用程序上下文实现的接口。
+ *  由{@link ContextLoader} 和 {@link org.springframework.web.servlet.FrameworkServlet}支持
+ *
  * <p>Note: The setters of this interface need to be called before an
  * invocation of the {@link #refresh} method inherited from
  * {@link org.springframework.context.ConfigurableApplicationContext}.
@@ -37,6 +40,7 @@ import org.springframework.lang.Nullable;
  * @see #refresh
  * @see ContextLoader#createWebApplicationContext
  * @see org.springframework.web.servlet.FrameworkServlet#createWebApplicationContext
+ * WebApplicationContext配置文件的总
  */
 public interface ConfigurableWebApplicationContext extends WebApplicationContext, ConfigurableApplicationContext {
 
@@ -91,6 +95,7 @@ public interface ConfigurableWebApplicationContext extends WebApplicationContext
 	 * i.e. with distinct locations separated by commas, semicolons or whitespace.
 	 * <p>If not set, the implementation is supposed to use a default for the
 	 * given namespace or the root web application context, as appropriate.
+	 * 设置spring的自定义配置文件路径
 	 */
 	void setConfigLocation(String configLocation);
 

@@ -46,6 +46,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @since 2.0
  * @see org.springframework.web.HttpRequestHandler
  * @see org.springframework.web.servlet.DispatcherServlet
+ *  对基础servlet进行封装
  */
 @SuppressWarnings("serial")
 public class HttpRequestHandlerServlet extends HttpServlet {
@@ -55,6 +56,9 @@ public class HttpRequestHandlerServlet extends HttpServlet {
 
 
 	@Override
+	/**
+	 * 重写GenericServlet 的init方法
+	 */
 	public void init() throws ServletException {
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		this.target = wac.getBean(getServletName(), HttpRequestHandler.class);
@@ -62,6 +66,9 @@ public class HttpRequestHandlerServlet extends HttpServlet {
 
 
 	@Override
+	/**
+	 * 处理请求
+	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 

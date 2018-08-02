@@ -28,6 +28,9 @@ import javax.servlet.http.HttpServletResponse;
  * {@link javax.servlet.http.HttpServlet}. This interface is essentially the
  * direct equivalent of an HttpServlet, reduced to a central handle method.
  *
+ * 处理HTTP请求的组件的普通处理程序接口，类似于Servlet。只说{ @link javax.servlet。ServletException }和{ @link . io .IOException}，允许在任何内容中使用
+ * { @link javax.servlet.http.HttpServlet }。这个接口实质上是HttpServlet的直接对等物，简化为一个中心句柄方法。
+ *
  * <p>The easiest way to expose an HttpRequestHandler bean in Spring style
  * is to define it in Spring's root web application context and define
  * an {@link org.springframework.web.context.support.HttpRequestHandlerServlet}
@@ -72,6 +75,8 @@ import javax.servlet.http.HttpServletResponse;
  * @see org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter
  * @see org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter
  * @see org.springframework.remoting.caucho.HessianServiceExporter
+ *
+ * 可以直接当HttpServlet使用
  */
 @FunctionalInterface
 public interface HttpRequestHandler {

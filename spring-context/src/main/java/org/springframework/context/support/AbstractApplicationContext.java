@@ -306,6 +306,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * form, allowing for further customization.
 	 * <p>If none specified, a default environment will be initialized via
 	 * {@link #createEnvironment()}.
+	 * 返回环境信息（根据不同环境区分的不同配置属性），如果没有特殊，则返回默认信息，{@link #createEnvironment()}.
 	 */
 	@Override
 	public ConfigurableEnvironment getEnvironment() {

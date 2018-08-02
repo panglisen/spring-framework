@@ -606,6 +606,8 @@ public abstract class ObjectUtils {
 	 * @param obj the object (may be {@code null})
 	 * @return the object's identity as String representation,
 	 * or an empty String if the object was {@code null}
+	 * 	返回对象的整体标识的字符串表示形式
+	 * 	返回对象的唯一标识
 	 */
 	public static String identityToString(@Nullable Object obj) {
 		if (obj == null) {

@@ -62,6 +62,8 @@ import org.springframework.util.Assert;
  * @see StandardEnvironment
  * @see AbstractEnvironment#getSystemEnvironment()
  * @see AbstractEnvironment#ACTIVE_PROFILES_PROPERTY_NAME
+ * 继承自MapPropertySource，它的source也是一个map，但来源于系统环境。
+ * 【重点】与MapPropertySource不同的是，取值时它将会忽略大小写，”.”和”_”将会转化。遇到转化情况会打印出日志
  */
 public class SystemEnvironmentPropertySource extends MapPropertySource {
 

@@ -26,10 +26,14 @@ import org.springframework.lang.Nullable;
  * factories that allow setting the parent in a configurable
  * fashion can be found in the ConfigurableBeanFactory interface.
  *
+ * 可以在ConfigurableBeanFactory接口中找到相应的{@code setParentBeanFactory}方法，该方法允许以可配置的方式设置父节点。
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @since 07.07.2003
  * @see org.springframework.beans.factory.config.ConfigurableBeanFactory#setParentBeanFactory
+ *
+ * 提供父容器的访问功能
+ *
  */
 public interface HierarchicalBeanFactory extends BeanFactory {
 

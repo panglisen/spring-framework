@@ -29,7 +29,8 @@ import org.springframework.lang.Nullable;
  * The default implementation of the {@link PropertySources} interface.
  * Allows manipulation of contained property sources and provides a constructor
  * for copying an existing {@code PropertySources} instance.
- *
+ *{@link PropertySources}接口的默认实现。允许对包含的属性源进行操作，
+ * 并为拷贝已经存在的PropertySources提供构造函数
  * <p>Where <em>precedence</em> is mentioned in methods such as {@link #addFirst}
  * and {@link #addLast}, this is with regard to the order in which property sources
  * will be searched when resolving a given property with a {@link PropertyResolver}.
@@ -38,9 +39,10 @@ import org.springframework.lang.Nullable;
  * @author Juergen Hoeller
  * @since 3.1
  * @see PropertySourcesPropertyResolver
+ *	提供线程安全的存储properties的方法，properties解析请看PropertySourcesPropertyResolver
  */
 public class MutablePropertySources implements PropertySources {
-
+	//采用线程安全方式存储properties
 	private final List<PropertySource<?>> propertySourceList = new CopyOnWriteArrayList<>();
 
 

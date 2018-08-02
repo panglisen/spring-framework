@@ -33,6 +33,7 @@ import javax.servlet.ServletContextListener;
  * @since 17.02.2003
  * @see #setContextInitializers
  * @see org.springframework.web.WebApplicationInitializer
+ * web.xml中配置此监听器，用于在容器启动时初始化spring容器
  */
 public class ContextLoaderListener extends ContextLoader implements ServletContextListener {
 
@@ -99,6 +100,7 @@ public class ContextLoaderListener extends ContextLoader implements ServletConte
 	 * Initialize the root web application context.
 	 */
 	@Override
+	//tomcat启动时将会调用，这里采用监听器模式，将tomcat启动事件传递到所有监听器里面
 	public void contextInitialized(ServletContextEvent event) {
 		initWebApplicationContext(event.getServletContext());
 	}

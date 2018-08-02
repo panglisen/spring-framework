@@ -32,13 +32,20 @@ import org.springframework.lang.Nullable;
  * to the application context client methods in the
  * {@link org.springframework.context.ApplicationContext} interface.
  *
+ * SPI接口由大多数（如果不是全部）应用程序上下文实现。
+ * 除了{@link org.springframework.context.ApplicationContext}接口中的应用程序上下文客户端方法之外，
+ * 还提供用于配置应用程序上下文的工具。
+ *
  * <p>Configuration and lifecycle methods are encapsulated here to avoid
  * making them obvious to ApplicationContext client code. The present
  * methods should only be used by startup and shutdown code.
  *
+ * 这里封装了配置和生命周期方法，以避免使它们对ApplicationContext客户端代码显而易见。 本方法只能由启动和关闭代码使用。
+ *
  * @author Juergen Hoeller
  * @author Chris Beams
  * @since 03.11.2003
+ *
  */
 public interface ConfigurableApplicationContext extends ApplicationContext, Lifecycle, Closeable {
 
@@ -114,6 +121,7 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	 * Return the {@code Environment} for this application context in configurable
 	 * form, allowing for further customization.
 	 * @since 3.1
+	 * 返回上下文所需要的环境
 	 */
 	@Override
 	ConfigurableEnvironment getEnvironment();

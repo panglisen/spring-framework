@@ -40,6 +40,24 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
  * @author Arjen Poutsma
  * @author Chris Beams
  * @since 3.2
+ *
+ * 这个类负责配置DispatcherServlet、初始化Spring MVC容器和Spring容器
+ * 主要用于自己实现无配置xml方式配置springMvc，与xml方式配置DispatcherServlet是俩种不同的方式（
+ * 	<servlet>
+ * 		<servlet-name>spring-mvc-servlet</servlet-name>
+ * 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+ * 		<init-param>
+ * 			<param-name>contextConfigLocation</param-name>
+ * 			<param-value>/WEB-INF/spring-mvc.xml</param-value>
+ * 		</init-param>
+ * 		<load-on-startup>1</load-on-startup>
+ * 	</servlet>
+ * 	<servlet-mapping>
+ * 		<servlet-name>spring-mvc-servlet</servlet-name>
+ * 		<url-pattern>/</url-pattern>
+ * 	</servlet-mapping>）
+ *
+ * 	参考：https://segmentfault.com/a/1190000004343063?_ea=575820
  */
 public abstract class AbstractAnnotationConfigDispatcherServletInitializer
 		extends AbstractDispatcherServletInitializer {

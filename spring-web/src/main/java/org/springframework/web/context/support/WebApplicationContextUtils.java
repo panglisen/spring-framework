@@ -289,17 +289,22 @@ public abstract class WebApplicationContextUtils {
 	 * servlet config property source} has already been initialized)
 	 * @see org.springframework.core.env.PropertySource.StubPropertySource
 	 * @see org.springframework.core.env.ConfigurableEnvironment#getPropertySources()
+	 * 主要做了俩件事，1：把servletContext存入到servletContextInitParams对应的sources中
+	 * 2.把servletConfig存入到servletConfigInitParams对应的sources
 	 */
 	public static void initServletPropertySources(MutablePropertySources sources,
 			@Nullable ServletContext servletContext, @Nullable ServletConfig servletConfig) {
 
 		Assert.notNull(sources, "'propertySources' must not be null");
-		String name = StandardServletEnvironment.SERVLET_CONTEXT_PROPERTY_SOURCE_NAME;
-		if (servletContext != null && sources.contains(name) && sources.get(name) instanceof StubPropertySource) {
+		//获取servletContextInitParams
+		String name = StandardServletEnvironment.SERVLET_CONTEXT_PROPERTY_SOURCE_NAME;//name=servletContextInitParams
+		if (servletContext != null && sources.contains(name) && sources.get(name) instanceof StubPropertySource) {//因为在StandardServletEnvironment.customizePropertySources存入的是StubPropertySource
+			//替换name=servletContextInitParams的sources为ServletContextPropertySource(name, servletContext)，其目的是把servletContext存入进去
 			sources.replace(name, new ServletContextPropertySource(name, servletContext));
 		}
-		name = StandardServletEnvironment.SERVLET_CONFIG_PROPERTY_SOURCE_NAME;
+		name = StandardServletEnvironment.SERVLET_CONFIG_PROPERTY_SOURCE_NAME;//name=servletConfigInitParams
 		if (servletConfig != null && sources.contains(name) && sources.get(name) instanceof StubPropertySource) {
+			//替换name=servletConfigInitParams的sources为ServletContextPropertySource(name, servletConfig)，其目的是把servletConfig存入进去
 			sources.replace(name, new ServletConfigPropertySource(name, servletConfig));
 		}
 	}

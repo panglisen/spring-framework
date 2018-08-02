@@ -56,6 +56,8 @@ import org.springframework.util.ObjectUtils;
  * @see PropertySourcesPropertyResolver
  * @see MutablePropertySources
  * @see org.springframework.context.annotation.PropertySource
+ * 	表示名称/值属性对的源的抽象基类。可以封装任何properties，value可以时map，通常时一组键值对
+ * 	最常用的参照org.springframework.context.annotation.PropertySource
  */
 public abstract class PropertySource<T> {
 
@@ -197,9 +199,15 @@ public abstract class PropertySource<T> {
 	 * {@code ApplicationContext}.  In such cases, a stub should be used to hold the
 	 * intended default position/order of the property source, then be replaced
 	 * during context refresh.
+	 *
+	 * {@code PropertySource}用于在应用程序上下文创建时不能热切初始化实际属性源的情况下作为占位符。例如，
+	 * 基于{@code ServletContext}的属性源必须等到{@code ServletContext}对象对其包含的{@code ApplicationContext}是可用的。
+	 * 在这种情况下，应该使用存根来保存属性源的默认位置/顺序，然后在上下文刷新时替换它。
 	 * @see org.springframework.context.support.AbstractApplicationContext#initPropertySources()
 	 * @see org.springframework.web.context.support.StandardServletEnvironment
 	 * @see org.springframework.web.context.support.ServletContextPropertySource
+	 *
+	 * 临时作为一个PropertySource的占位，后期会被真实的PropertySource取代。
 	 */
 	public static class StubPropertySource extends PropertySource<Object> {
 
@@ -221,7 +229,7 @@ public abstract class PropertySource<T> {
 	/**
 	 * A {@code PropertySource} implementation intended for collection comparison
 	 * purposes.
-	 *
+	 *		用于收集比较的目的
 	 * @see PropertySource#named(String)
 	 */
 	static class ComparisonPropertySource extends StubPropertySource {
