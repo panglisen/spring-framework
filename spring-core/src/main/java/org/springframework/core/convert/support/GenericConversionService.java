@@ -59,6 +59,7 @@ import org.springframework.util.StringUtils;
  * @author Phillip Webb
  * @author David Haraburda
  * @since 3.0
+ * ConversionService的基础实现类，适合在大部分环境下使用
  */
 public class GenericConversionService implements ConfigurableConversionService {
 

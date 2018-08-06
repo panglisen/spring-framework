@@ -33,6 +33,8 @@ import org.springframework.core.convert.converter.ConverterRegistry;
  * @see org.springframework.core.env.ConfigurablePropertyResolver#getConversionService()
  * @see org.springframework.core.env.ConfigurableEnvironment
  * @see org.springframework.context.ConfigurableApplicationContext#getEnvironment()
+ *	继承ConversionService和ConverterRegistry，
+ *	提供注册转换器和类型转换功能，所以一般只需要实现ConfigurableConversionService就可以了
  */
 public interface ConfigurableConversionService extends ConversionService, ConverterRegistry {
 

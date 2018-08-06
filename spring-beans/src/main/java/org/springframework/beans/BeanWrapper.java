@@ -29,6 +29,8 @@ import java.beans.PropertyDescriptor;
  * the ability to get and set property values (individually or in bulk),
  * get property descriptors, and query the readability/writability of properties.
  *
+ * 提供分析和操作标准javabean的操作:获取和设置属性值(单独或批量)、获取属性描述符以及查询属性的可读性/可写性的能力。
+ *
  * <p>This interface supports <b>nested properties</b> enabling the setting
  * of properties on subproperties to an unlimited depth.
  *
@@ -52,22 +54,27 @@ public interface BeanWrapper extends ConfigurablePropertyAccessor {
 	 * Specify a limit for array and collection auto-growing.
 	 * <p>Default is unlimited on a plain BeanWrapper.
 	 * @since 4.1
+	 *
+	 * 指定数组和集合自动增长的限制。在普通的BeanWrapper上默认是无限制的。
 	 */
 	void setAutoGrowCollectionLimit(int autoGrowCollectionLimit);
 
 	/**
 	 * Return the limit for array and collection auto-growing.
 	 * @since 4.1
+	 * 获取指定数组和集合自动正查的限制
 	 */
 	int getAutoGrowCollectionLimit();
 
 	/**
 	 * Return the bean instance wrapped by this object.
+	 *返回一个被实现类包装的bean实例
 	 */
 	Object getWrappedInstance();
 
 	/**
 	 * Return the type of the wrapped bean instance.
+	 * 返回一个被实现类包装的bean实例
 	 */
 	Class<?> getWrappedClass();
 
@@ -75,6 +82,8 @@ public interface BeanWrapper extends ConfigurablePropertyAccessor {
 	 * Obtain the PropertyDescriptors for the wrapped object
 	 * (as determined by standard JavaBeans introspection).
 	 * @return the PropertyDescriptors for the wrapped object
+	 * 定义被包装类的配置文件描述
+	 * PropertyDescriptor已javaBean形式表示配置文件
 	 */
 	PropertyDescriptor[] getPropertyDescriptors();
 

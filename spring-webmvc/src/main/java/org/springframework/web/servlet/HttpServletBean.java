@@ -143,6 +143,8 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 	 * invoke subclass initialization.
 	 * @throws ServletException if bean properties are invalid (or required
 	 * properties are missing), or if subclass initialization fails.
+	 * servlet初始化的时候会调用，配合web.xml中的<load-on-startup>1</load-on-startup>
+	 * 可以在容器启动时自动调用
 	 */
 	@Override
 	public final void init() throws ServletException {
@@ -151,6 +153,14 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		}
 
 		// Set bean properties from init parameters.
+		/**
+		 * getServletConfig()获取web.xml中
+		 * 		<init-param>
+		 * 			<param-name>contextConfigLocation</param-name>
+		 * 			<param-value>/WEB-INF/spring-mvc.xml</param-value>
+		 * 		</init-param>
+		 * 	配置信息存入到requiredProperties
+		 */
 		PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);
 		if (!pvs.isEmpty()) {
 			try {

@@ -81,6 +81,8 @@ import org.springframework.util.ClassUtils;
  * Base implementation of the {@link PropertyEditorRegistry} interface.
  * Provides management of default editors and custom editors.
  * Mainly serves as base class for {@link BeanWrapperImpl}.
+ * 提供管理默认编辑器和自定义编辑器
+ * 主要作为{@link BeanWrapperImpl}的基类。
  *
  * @author Juergen Hoeller
  * @author Rob Harrop
@@ -88,6 +90,8 @@ import org.springframework.util.ClassUtils;
  * @see java.beans.PropertyEditorManager
  * @see java.beans.PropertyEditorSupport#setAsText
  * @see java.beans.PropertyEditorSupport#setValue
+ * 提供管理默认编辑器和自定义编辑器
+ * 主要作为{@link BeanWrapperImpl}的基类。
  */
 public class PropertyEditorRegistrySupport implements PropertyEditorRegistry {
 
@@ -107,9 +111,15 @@ public class PropertyEditorRegistrySupport implements PropertyEditorRegistry {
 	@Nullable
 	private Map<Class<?>, PropertyEditor> customEditors;
 
+	/**
+	 * 用于存储type和属性编辑器一起成对保存
+	 */
 	@Nullable
 	private Map<String, CustomEditorHolder> customEditorsForPath;
 
+	/**
+	 * 用于存储自定义属性编辑器
+	 */
 	@Nullable
 	private Map<Class<?>, PropertyEditor> customEditorCache;
 

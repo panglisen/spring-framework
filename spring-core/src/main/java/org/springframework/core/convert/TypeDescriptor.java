@@ -45,6 +45,7 @@ import org.springframework.util.ObjectUtils;
  * @author Sam Brannen
  * @author Stephane Nicoll
  * @since 3.0
+ * 用于转换或转换的类型的上下文
  */
 @SuppressWarnings("serial")
 public class TypeDescriptor implements Serializable {

@@ -24,6 +24,7 @@ import java.util.Locale;
  * @author Keith Donald
  * @since 3.0
  * @param <T> the type of object this Printer prints
+ * 打印类型为T的对象以供显示
  */
 @FunctionalInterface
 public interface Printer<T> {

@@ -22,10 +22,13 @@ import org.springframework.core.convert.converter.ConverterRegistry;
 
 /**
  * A registry of field formatting logic.
- *
+ *	字段格式化逻辑的注册表。
  * @author Keith Donald
  * @author Juergen Hoeller
  * @since 3.0
+ * 注册带有逻辑的格式转换器如DateFormatter、DateFormatter都将注册到此实现类,请参看
+ * 	@see org.springframework.format.support.FormattingConversionService
+ * 	@see org.springframework.format.support.DefaultFormattingConversionService
  */
 public interface FormatterRegistry extends ConverterRegistry {
 

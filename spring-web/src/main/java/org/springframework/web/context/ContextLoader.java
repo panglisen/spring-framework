@@ -433,7 +433,7 @@ public class ContextLoader {
 		 * 在刷新上下文时，wac环境的#initPropertySources将在任何情况下被调用;在这里，
 		 * 您是否急于确保在#refresh之前发生的任何后续处理或初始化中使用servlet属性源
 		 */
-		ConfigurableEnvironment env = wac.getEnvironment();//获取XmlWebApplicationContext必要的配置信息，此处调用XmlWebApplicationContext的父类AbstractApplicationContext.getEnvironment()，返回StandardEnvironment
+		ConfigurableEnvironment env = wac.getEnvironment();//获取XmlWebApplicationContext必要的配置信息，此处调用XmlWebApplicationContext的父类AbstractApplicationContext.getEnvironment()，又调用了AbstractRefreshableWebApplicationContext.createEnvironment返回StandardServletEnvironment
 		if (env instanceof ConfigurableWebEnvironment) {//因为StandardEnvironment间接实现了ConfigurableEnvironment，ConfigurableWebEnvironment继承了ConfigurableEnvironment，所以instanceof为true
 			/**
 			 * 初始化配置文件及web环境的配置信息

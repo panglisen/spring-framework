@@ -45,7 +45,7 @@ import org.springframework.util.ReflectionUtils;
  * <p><b>NOTE: As of Spring 2.5, this is - for almost all purposes - an
  * internal class.</b> It is just public in order to allow for access from
  * other framework packages. For standard application access purposes, use the
- * {@link PropertyAccessorFactory#forBeanPropertyAccess} factory method instead.
+ * {@link PropertyAccessorFactory#forBeanPropertyAccess} factorygetWrappedInstance method instead.
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -55,7 +55,7 @@ import org.springframework.util.ReflectionUtils;
  * @see #registerCustomEditor
  * @see #setPropertyValues
  * @see #setPropertyValue
- * @see #getPropertyValue
+ * @see #getPropertyValuegetPropertyDescriptors
  * @see #getPropertyType
  * @see BeanWrapper
  * @see PropertyEditorRegistrySupport

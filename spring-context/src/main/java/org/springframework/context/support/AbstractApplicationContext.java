@@ -172,6 +172,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	private ApplicationContext parent;
 
 	/** Environment used by this context. */
+	//保存上下文的环境
 	@Nullable
 	private ConfigurableEnvironment environment;
 

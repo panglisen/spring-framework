@@ -23,6 +23,7 @@ package org.springframework.format;
  * @author Keith Donald
  * @since 3.0
  * @param <T> the type of object this Formatter formats
+ * 定义打印和转换T类型对象，例如DateFormatter等所有formatter
  */
 public interface Formatter<T> extends Printer<T>, Parser<T> {
 

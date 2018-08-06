@@ -30,6 +30,7 @@ import org.springframework.lang.Nullable;
  * @author Stephane Nicoll
  * @since 2.0
  * @see BeanWrapper
+ * 定义PropertyEditor注册，类型转换
  */
 public interface ConfigurablePropertyAccessor extends PropertyAccessor, PropertyEditorRegistry, TypeConverter {
 
