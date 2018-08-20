@@ -60,6 +60,8 @@ import org.springframework.util.StringValueResolver;
  * @author Rossen Stoyanchev
  * @author Chris Beams
  * @since 3.0
+ *
+ * 一个用于配置converters和formatters用于通用类型的转换的工厂类（如：日期格式）
  */
 public class FormattingConversionServiceFactoryBean
 		implements FactoryBean<FormattingConversionService>, EmbeddedValueResolverAware, InitializingBean {

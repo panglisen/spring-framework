@@ -53,6 +53,7 @@ import org.springframework.util.CollectionUtils;
  * @see #setMappings
  * @see #setUrlMap
  * @see BeanNameUrlHandlerMapping
+ * 允许通过配置文件，可以使url和controller直接绑定，使用场景太少
  */
 public class SimpleUrlHandlerMapping extends AbstractUrlHandlerMapping {
 

@@ -27,6 +27,7 @@ import org.springframework.util.Assert;
  * @author Juergen Hoeller
  * @see BeanDefinition#getPropertyValues()
  * @see org.springframework.beans.factory.BeanFactory#getBean
+ * 运行时bean的依赖解析（没有显示引用的bean）
  */
 public class RuntimeBeanReference implements BeanReference {
 

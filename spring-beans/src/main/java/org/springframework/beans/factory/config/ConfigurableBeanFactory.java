@@ -47,6 +47,9 @@ import org.springframework.util.StringValueResolver;
  * @see org.springframework.beans.factory.BeanFactory
  * @see org.springframework.beans.factory.ListableBeanFactory
  * @see ConfigurableListableBeanFactory
+ * 这个接口并不是在普通的应用代码中使用，如果在普通代码使用，请参考{@link org.springframework.beans.factory.BeanFactory} 或者
+ * {@link org.springframework.beans.factory.ListableBeanFactory}
+ * 这个接口仅是用于框架内部和特殊访问bean工厂配置方法
  */
 public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, SingletonBeanRegistry {
 

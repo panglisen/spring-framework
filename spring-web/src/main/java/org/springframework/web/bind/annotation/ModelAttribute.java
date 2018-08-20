@@ -52,6 +52,8 @@ import org.springframework.ui.Model;
  * @author Juergen Hoeller
  * @author Rossen Stoyanchev
  * @since 2.5
+ * 此注解用于辅助@RequestMapping，可以绑定一些属性，先于@RequestMapping执行，可以用于在同一个controller中的公共代码抽取
+ * 每一个请求都会先执行标记了@ModelAttribute注解的方法
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

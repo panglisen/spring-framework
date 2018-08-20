@@ -294,11 +294,15 @@ public class PropertyEditorRegistrySupport implements PropertyEditorRegistry {
 	// Management of custom editors
 	//---------------------------------------------------------------------
 
+	//管理自定义属性解析器
 	@Override
 	public void registerCustomEditor(Class<?> requiredType, PropertyEditor propertyEditor) {
 		registerCustomEditor(requiredType, null, propertyEditor);
 	}
 
+	/**
+	 *  把属性编辑器存入customEditors和customEditorsForPath
+	 */
 	@Override
 	public void registerCustomEditor(@Nullable Class<?> requiredType, @Nullable String propertyPath, PropertyEditor propertyEditor) {
 		if (requiredType == null && propertyPath == null) {

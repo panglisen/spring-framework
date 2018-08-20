@@ -544,6 +544,9 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	@Override
 	public void afterPropertiesSet() {
 		// Do this first, it may add ResponseBody advice beans
+		/**
+		 * 此处加载所有标记有@ControllerAdvice的bean
+		 */
 		initControllerAdviceCache();
 
 		if (this.argumentResolvers == null) {
@@ -564,7 +567,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 		if (getApplicationContext() == null) {
 			return;
 		}
-
+		//获取所有加了@ControllerAdvice注解的bean
 		List<ControllerAdviceBean> adviceBeans = ControllerAdviceBean.findAnnotatedBeans(getApplicationContext());
 		AnnotationAwareOrderComparator.sort(adviceBeans);
 
@@ -577,17 +580,17 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 			}
 			Set<Method> attrMethods = MethodIntrospector.selectMethods(beanType, MODEL_ATTRIBUTE_METHODS);
 			if (!attrMethods.isEmpty()) {
-				this.modelAttributeAdviceCache.put(adviceBean, attrMethods);
+				this.modelAttributeAdviceCache.put(adviceBean, attrMethods);//在标记了@ControllerAdvice注解的类中把所有添加了注解@ModelAttribute的方法缓存起来
 			}
 			Set<Method> binderMethods = MethodIntrospector.selectMethods(beanType, INIT_BINDER_METHODS);
 			if (!binderMethods.isEmpty()) {
-				this.initBinderAdviceCache.put(adviceBean, binderMethods);
+				this.initBinderAdviceCache.put(adviceBean, binderMethods);//在标记了@ControllerAdvice注解的类中把所有添加了注解@InitBinder的方法缓存起来
 			}
 			if (RequestBodyAdvice.class.isAssignableFrom(beanType)) {
-				requestResponseBodyAdviceBeans.add(adviceBean);
+				requestResponseBodyAdviceBeans.add(adviceBean);//在标记了@ControllerAdvice注解的类中把所有实现了RequestBodyAdvice类缓存起来
 			}
 			if (ResponseBodyAdvice.class.isAssignableFrom(beanType)) {
-				requestResponseBodyAdviceBeans.add(adviceBean);
+				requestResponseBodyAdviceBeans.add(adviceBean);//在标记了@ControllerAdvice注解的类中把所有实现了ResponseBodyAdvice类缓存起来
 			}
 		}
 
@@ -832,6 +835,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	 * if view resolution is required.
 	 * @since 4.2
 	 * @see #createInvocableHandlerMethod(HandlerMethod)
+	 * 处理请求，返回ModelAndView
 	 */
 	@Nullable
 	protected ModelAndView invokeHandlerMethod(HttpServletRequest request,

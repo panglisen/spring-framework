@@ -52,6 +52,7 @@ import org.springframework.util.StringUtils;
  * @since 2.0
  * @see BeanWrapperImpl
  * @see SimpleTypeConverter
+ * 传入PropertyEditorRegistrySupport，在BeanWrapperImpl和SimpleTypeConverter中使用
  */
 class TypeConverterDelegate {
 
@@ -146,6 +147,7 @@ class TypeConverterDelegate {
 	 * @param typeDescriptor the descriptor for the target property or field
 	 * @return the new value, possibly the result of type conversion
 	 * @throws IllegalArgumentException if type conversion failed
+	 * 把string类型的属性转为所需要的类型
 	 */
 	@SuppressWarnings("unchecked")
 	@Nullable
@@ -153,12 +155,14 @@ class TypeConverterDelegate {
 			@Nullable Class<T> requiredType, @Nullable TypeDescriptor typeDescriptor) throws IllegalArgumentException {
 
 		// Custom editor for this type?
+		//在所有实现了PropertyEditor接口，并注册到PropertyEditorRegistrySupport中的属性编辑器
 		PropertyEditor editor = this.propertyEditorRegistry.findCustomEditor(requiredType, propertyName);
 
 		ConversionFailedException conversionAttemptEx = null;
 
 		// No custom editor but custom ConversionService specified?
-		ConversionService conversionService = this.propertyEditorRegistry.getConversionService();
+		ConversionService conversionService = this.propertyEditorRegistry.getConversionService();//获取类型转换service
+		//属性编辑器为null但是类型转换service找到
 		if (editor == null && conversionService != null && newValue != null && typeDescriptor != null) {
 			TypeDescriptor sourceTypeDesc = TypeDescriptor.forObject(newValue);
 			if (conversionService.canConvert(sourceTypeDesc, typeDescriptor)) {
@@ -175,6 +179,7 @@ class TypeConverterDelegate {
 		Object convertedValue = newValue;
 
 		// Value not of required type?
+		//经过上面处理，属性编辑器不为null或者经过转换后的仍不是所需的类型
 		if (editor != null || (requiredType != null && !ClassUtils.isAssignableValue(requiredType, convertedValue))) {
 			if (typeDescriptor != null && requiredType != null && Collection.class.isAssignableFrom(requiredType) &&
 					convertedValue instanceof String) {
@@ -196,7 +201,7 @@ class TypeConverterDelegate {
 
 		if (requiredType != null) {
 			// Try to apply some standard type conversion rules if appropriate.
-
+			//尝试一些标准类型转换规则，也就是java基本类型转换
 			if (convertedValue != null) {
 				if (Object.class == requiredType) {
 					return (T) convertedValue;

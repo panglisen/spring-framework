@@ -56,6 +56,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMappi
  * @author Rossen Stoyanchev
  * @author Sam Brannen
  * @since 3.1
+ * 请求路径与方法绑定，最常用
  */
 public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMapping
 		implements MatchableHandlerMapping, EmbeddedValueResolverAware {

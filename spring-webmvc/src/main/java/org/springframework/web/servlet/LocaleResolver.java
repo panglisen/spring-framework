@@ -27,6 +27,8 @@ import org.springframework.lang.Nullable;
  * both locale resolution via the request and locale modification via
  * request and response.
  *
+ * 允许通过请求进行现场解决，并通过请求和响应进行现场修改。
+ *
  * <p>This interface allows for implementations based on request, session,
  * cookies, etc. The default implementation is
  * {@link org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver},

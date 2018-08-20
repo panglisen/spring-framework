@@ -59,6 +59,9 @@ import org.springframework.util.ReflectionUtils;
  * @see #getPropertyType
  * @see BeanWrapper
  * @see PropertyEditorRegistrySupport
+ * BeanWrapperImpl类是对BeanWrapper接口的默认实现，它包装了一个bean对象，缓存了bean的内省结果，并可以访问bean的属性、
+ * 设置bean的属性值。BeanWrapperImpl类提供了许多默认属性编辑器，支持多种不同类型的类型转换，可以将数组、集合类型的属性
+ * 转换成指定特殊类型的数组或集合。用户也可以注册自定义的属性编辑器在BeanWrapperImpl中。
  */
 public class BeanWrapperImpl extends AbstractNestablePropertyAccessor implements BeanWrapper {
 
@@ -310,7 +313,9 @@ public class BeanWrapperImpl extends AbstractNestablePropertyAccessor implements
 		}
 
 		@Override
+		//此处采用java的Introspector预先将类的一些信息缓存起来
 		public void setValue(final @Nullable Object value) throws Exception {
+			//此处采用Introspector规定的要求（setXX和getXX区分读写方法）
 			final Method writeMethod = (this.pd instanceof GenericTypeAwarePropertyDescriptor ?
 					((GenericTypeAwarePropertyDescriptor) this.pd).getWriteMethodForActualAccess() :
 					this.pd.getWriteMethod());

@@ -72,7 +72,7 @@ import org.springframework.util.StringUtils;
 public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyAccessor {
 
 	/**
-	 * We'll create a lot of these objects, so we don't want a new logger every time.
+	 * We'll create a lot of these objects, so we don'registerCustomEditort want a new logger every time.
 	 */
 	private static final Log logger = LogFactory.getLog(AbstractNestablePropertyAccessor.class);
 
@@ -236,12 +236,14 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 	public void setPropertyValue(String propertyName, @Nullable Object value) throws BeansException {
 		AbstractNestablePropertyAccessor nestedPa;
 		try {
+			//获取配置，此处返回的其实就是BeanWapperImpl
 			nestedPa = getPropertyAccessorForPropertyPath(propertyName);
 		}
 		catch (NotReadablePropertyException ex) {
 			throw new NotWritablePropertyException(getRootClass(), this.nestedPath + propertyName,
 					"Nested property in path '" + propertyName + "' does not exist", ex);
 		}
+		//PropertyTokenHolder用于存储属性的名字和真实名字
 		PropertyTokenHolder tokens = getPropertyNameTokens(getFinalPath(nestedPa, propertyName));
 		nestedPa.setPropertyValue(tokens, new PropertyValue(propertyName, value));
 	}
@@ -412,6 +414,11 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 		return propValue;
 	}
 
+	/**
+	 * 处理配置文件，并进行属性类型转换
+	 * @param tokens
+	 * @param pv
+	 */
 	private void processLocalProperty(PropertyTokenHolder tokens, PropertyValue pv) {
 		PropertyHandler ph = getLocalPropertyHandler(tokens.actualName);
 		if (ph == null || !ph.isWritable()) {
@@ -450,6 +457,7 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 							}
 						}
 					}
+					//类型转换
 					valueToApply = convertForProperty(
 							tokens.canonicalName, oldValue, originalValue, ph.toTypeDescriptor());
 				}
@@ -575,6 +583,9 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 		return false;
 	}
 
+	/**
+	 *	使用TypeConverterDelegate进行类型转换
+	 */
 	@Nullable
 	private Object convertIfNecessary(@Nullable String propertyName, @Nullable Object oldValue,
 			@Nullable Object newValue, @Nullable Class<?> requiredType, @Nullable TypeDescriptor td)
@@ -805,6 +816,7 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 	 * Recursively navigate to return a property accessor for the nested property path.
 	 * @param propertyPath property path, which may be nested
 	 * @return a property accessor for the target bean
+	 *	递归解决嵌套
 	 */
 	@SuppressWarnings("unchecked")  // avoid nested generic
 	protected AbstractNestablePropertyAccessor getPropertyAccessorForPropertyPath(String propertyPath) {
@@ -1031,6 +1043,7 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 
 	/**
 	 * Holder class used to store property tokens.
+	 * 用于存储属性的令牌
 	 */
 	protected static class PropertyTokenHolder {
 
@@ -1038,9 +1051,9 @@ public abstract class AbstractNestablePropertyAccessor extends AbstractPropertyA
 			this.actualName = name;
 			this.canonicalName = name;
 		}
-
+		//真实名字
 		public String actualName;
-
+		//标准名字
 		public String canonicalName;
 
 		@Nullable

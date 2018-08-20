@@ -498,14 +498,47 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
 	 */
 	protected void initStrategies(ApplicationContext context) {
+		//初始化文件上传解析器
 		initMultipartResolver(context);
+		//处理国际化问题，通过浏览器的header中来区分语言等信息，默认实现类是AcceptHeaderLocaleResolver
 		initLocaleResolver(context);
+		//主要用于主题设置，默认实现为FixedThemeResolver（固定样式，运行中无法更改）
 		initThemeResolver(context);
+		/**
+		 * 查看DispatcherServlet.properties
+		 * 初始化HandlerMapping，并排序，默认实现为：
+		 * 	RequestMappingHandlerMapping：请求路径与方法绑定，最常用，如@RequestMapping，@Controller
+		 * 	SimpleUrlHandlerMapping：允许通过配置文件，可以使url和controller直接绑定，使用场景太少
+		 *  BeanNameUrlHandlerMapping：允许通过配置将url和spring中的bean绑定，允许通过url直接访问bean，使用场景太少
+		 */
 		initHandlerMappings(context);
+		/**
+		 *  查看 DispatcherServlet.properties
+		 *	初始化HandlerAdapter，并排序，默认实现为：
+		 *  HttpRequestHandlerAdapter：处理http请求
+		 *  SimpleControllerHandlerAdapter：处理自定义简单的实现了controller接口的处理器
+		 *  RequestMappingHandlerAdapter：处理标记了@RequestMapping注解的请求
+		 */
 		initHandlerAdapters(context);
+		/**
+		 * 初始化异常解析器
+		 * ExceptionHandlerExceptionResolver：处理程序的异常,包括 Handler 映射、数据绑定以及目标方法执行时发生的异常（参考：https://blog.csdn.net/yalishadaa/article/details/71440561）
+		 * ResponseStatusExceptionResolver：状态异常解析器
+		 * DefaultHandlerExceptionResolver：对异常进行一一处理，并最终展示为不同信息（比如状态 500：Web服务内部错误 406：无和请求accept匹配的MIME类型415：
+		 *      不支持的MIME类型400：坏的请求405：不支持的请求方法404：找不到匹配的资源。
+		 */
 		initHandlerExceptionResolvers(context);
+		/**
+		 * 可以在处理器返回的View为空时使用它根据Request获取viewName。RequestToViewNameTranslator提供的实现类只有一个DefaultRequestToViewNameTranslator
+		 */
 		initRequestToViewNameTranslator(context);
+		/**
+		 *	试图解析器默认实现：InternalResourceViewResolver
+		 */
 		initViewResolvers(context);
+		/**
+		 *	初始化数据保存map，用于数据在传输过程中的保存（如session中的数据）
+		 */
 		initFlashMapManager(context);
 	}
 
@@ -593,6 +626,10 @@ public class DispatcherServlet extends FrameworkServlet {
 
 		if (this.detectAllHandlerMappings) {
 			// Find all HandlerMappings in the ApplicationContext, including ancestor contexts.
+			/**
+			 * 此处在所有bean中查找HandlerMapping的实现类并且是单例并bean中不是lazy-init和不是用工厂方法创建的类
+			 * 默认有四个实现类 SimpleUrlHandlerMapping、BeanNameUrlHandlerMapping、RequestMappingHandlerMapping、DefaultAnnotationHandlerMapping（在3.2以后版本被遗弃）
+			 */
 			Map<String, HandlerMapping> matchingBeans =
 					BeanFactoryUtils.beansOfTypeIncludingAncestors(context, HandlerMapping.class, true, false);
 			if (!matchingBeans.isEmpty()) {
@@ -907,10 +944,14 @@ public class DispatcherServlet extends FrameworkServlet {
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		/**
+		 * 记录请求参数，日志级别为trace级别
+		 */
 		logRequest(request);
 
 		// Keep a snapshot of the request attributes in case of an include,
 		// to be able to restore the original attributes after the include.
+		//处理include，页面中的include标签
 		Map<String, Object> attributesSnapshot = null;
 		if (WebUtils.isIncludeRequest(request)) {
 			attributesSnapshot = new HashMap<>();
@@ -929,6 +970,9 @@ public class DispatcherServlet extends FrameworkServlet {
 		request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);
 		request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
 
+		/**
+		 * 处理保存数据的FlashMapManager，用于在请求之间传递参数
+		 */
 		if (this.flashMapManager != null) {
 			FlashMap inputFlashMap = this.flashMapManager.retrieveAndUpdate(request, response);
 			if (inputFlashMap != null) {
@@ -997,6 +1041,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * @param request current HTTP request
 	 * @param response current HTTP response
 	 * @throws Exception in case of any kind of processing failure
+	 * 将一个请求转换为Handler，通过HandlerMappings可以获得
 	 */
 	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpServletRequest processedRequest = request;
@@ -1010,10 +1055,14 @@ public class DispatcherServlet extends FrameworkServlet {
 			Exception dispatchException = null;
 
 			try {
+				/**
+				 * 检查是否是文件上传，或者是否配置了multipartResolver
+				 */
 				processedRequest = checkMultipart(request);
 				multipartRequestParsed = (processedRequest != request);
 
 				// Determine handler for the current request.
+				//根据当前的request得到handler
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null) {
 					noHandlerFound(processedRequest, response);
@@ -1226,6 +1275,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * <p>Tries all handler mappings in order.
 	 * @param request current HTTP request
 	 * @return the HandlerExecutionChain, or {@code null} if no handler could be found
+	 *
 	 */
 	@Nullable
 	protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {

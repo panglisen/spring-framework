@@ -46,6 +46,7 @@ import org.springframework.util.StringUtils;
  * @see ResourceLoader
  * @see DefaultResourceLoader
  * @see PropertyResolver#resolvePlaceholders
+ * 把配置文件转换为Resource
  */
 public class ResourceEditor extends PropertyEditorSupport {
 

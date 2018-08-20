@@ -36,6 +36,7 @@ import org.springframework.core.io.Resource;
  * @see org.springframework.web.context.WebApplicationContext
  * @see org.springframework.web.servlet.HttpServletBean
  * @see org.springframework.web.filter.GenericFilterBean
+ * servlet环境资源加载器
  */
 public class ServletContextResourceLoader extends DefaultResourceLoader {
 

@@ -37,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @see org.springframework.web.HttpRequestHandler
  * @see LastModified
  * @see SimpleControllerHandlerAdapter
+ * 	采用spi加载
  */
 public class HttpRequestHandlerAdapter implements HandlerAdapter {
 

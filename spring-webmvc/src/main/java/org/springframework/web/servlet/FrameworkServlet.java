@@ -556,6 +556,10 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	 * @see #setContextConfigLocation
 	 */
 	protected WebApplicationContext initWebApplicationContext() {
+		/**此处实际是从ServletContext#getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE)中获取WebApplicationContext
+		 * 因为在之前与tomcat启动部分，采用监听器模式已经将XmlWebApplicationContext放入ServletContext的属性中
+		 * 此处获取到的是根容器
+		 */
 		WebApplicationContext rootContext =
 				WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		WebApplicationContext wac = null;
@@ -586,6 +590,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		}
 		if (wac == null) {
 			// No context instance is defined for this servlet -> create a local one
+			//此处创建应用自身容器WebApplicationContext
 			wac = createWebApplicationContext(rootContext);
 		}
 
@@ -649,6 +654,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	 * @see org.springframework.web.context.support.XmlWebApplicationContext
 	 */
 	protected WebApplicationContext createWebApplicationContext(@Nullable ApplicationContext parent) {
+		//获取XmlWebApplicationContext
 		Class<?> contextClass = getContextClass();
 		if (logger.isTraceEnabled()) {
 			logger.trace("Servlet '" + getServletName() +
@@ -661,11 +667,16 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 					"': custom WebApplicationContext class [" + contextClass.getName() +
 					"] is not of type ConfigurableWebApplicationContext");
 		}
+		//通过默认构造函数实例化
 		ConfigurableWebApplicationContext wac =
 				(ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);
-
+		/**
+		 * getEnvironment()获取StandardServletEnvironment
+		 * 把web容器所需的环境配置到应用自身的容器中
+		 */
 		wac.setEnvironment(getEnvironment());
-		wac.setParent(parent);
+		wac.setParent(parent);//设置父容器
+		//获取web.xml中contextConfigLocation配置的参数获取到
 		String configLocation = getContextConfigLocation();
 		if (configLocation != null) {
 			wac.setConfigLocation(configLocation);
@@ -993,7 +1004,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 
 		long startTime = System.currentTimeMillis();
 		Throwable failureCause = null;
-
+		//此处获取本地环境信息，也就是请求者语言信息（en，zn等信息）
 		LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
 		LocaleContext localeContext = buildLocaleContext(request);
 
@@ -1001,11 +1012,13 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);
 
 		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+		//把RequestBindingInterceptor注册到WebAsyncManager中，以便于后面回调RequestBindingInterceptor
 		asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());
 
 		initContextHolders(request, localeContext, requestAttributes);
 
 		try {
+			//处理请求
 			doService(request, response);
 		}
 		catch (ServletException | IOException ex) {

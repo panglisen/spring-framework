@@ -159,15 +159,23 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		 * 			<param-name>contextConfigLocation</param-name>
 		 * 			<param-value>/WEB-INF/spring-mvc.xml</param-value>
 		 * 		</init-param>
-		 * 	配置信息存入到requiredProperties
+		 *
+		 * 	检查必要属性配置requiredProperties是否配置在初始化参数中，如果不存在则报错
 		 */
 		PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);
 		if (!pvs.isEmpty()) {
 			try {
+				/**
+				 * 初始化必要属性并创建了TypeConverterDelegate类的实例作为类型转换处理对象
+				 */
 				BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
+				//通过ServletContext上下文获取资源加载器
 				ResourceLoader resourceLoader = new ServletContextResourceLoader(getServletContext());
+				//注册属性解析器,调用PropertyEditorRegistrySupport#registerCustomEditor
 				bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, getEnvironment()));
+				//此处采用模板设计模式，又继承者去实现此方法，但是此处并未发现实现
 				initBeanWrapper(bw);
+				//AbstractPropertyAccessor#setPropertyValues
 				bw.setPropertyValues(pvs, true);
 			}
 			catch (BeansException ex) {
@@ -179,6 +187,7 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		}
 
 		// Let subclasses do whatever initialization they like.
+		//由子类去重写
 		initServletBean();
 
 		if (logger.isTraceEnabled()) {
@@ -230,6 +239,9 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		 * @param requiredProperties set of property names we need, where
 		 * we can't accept default values
 		 * @throws ServletException if any required properties are missing
+		 * 使用ServletConfig从requiredProperties中获取属性值，不接受默认值
+		 *
+		 * 初始化参数中如果没有requiredProperties，则会报错
 		 */
 		public ServletConfigPropertyValues(ServletConfig config, Set<String> requiredProperties)
 				throws ServletException {
