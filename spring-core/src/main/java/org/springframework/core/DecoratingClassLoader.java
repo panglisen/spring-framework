@@ -35,6 +35,7 @@ import org.springframework.util.Assert;
 public abstract class DecoratingClassLoader extends ClassLoader {
 
 	static {
+		//java7的并行加载机制，所以要在静态方法里将ClassLoader注册为可并行加载
 		ClassLoader.registerAsParallelCapable();
 	}
 

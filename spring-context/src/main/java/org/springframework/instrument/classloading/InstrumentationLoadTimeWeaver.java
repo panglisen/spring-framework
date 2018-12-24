@@ -88,6 +88,7 @@ public class InstrumentationLoadTimeWeaver implements LoadTimeWeaver {
 		synchronized (this.transformers) {
 			Assert.state(this.instrumentation != null,
 					"Must start with Java agent to use InstrumentationLoadTimeWeaver. See Spring documentation.");
+			//加入到jdk的instrumentation中加载class时自动调用
 			this.instrumentation.addTransformer(actualTransformer);
 			this.transformers.add(actualTransformer);
 		}

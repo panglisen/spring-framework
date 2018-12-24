@@ -191,7 +191,9 @@ public class BeanFactoryPostProcessorTests {
 		}
 	}
 
-
+	/**
+	 * 自定义的注册BeanFactoryPostProcessor
+	 */
 	public static class TestBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
 		public boolean wasCalled;

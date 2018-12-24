@@ -40,6 +40,7 @@ import org.springframework.util.Assert;
  * @since 2.5
  * @see LoadTimeWeaverAware
  * @see org.springframework.context.ConfigurableApplicationContext#LOAD_TIME_WEAVER_BEAN_NAME
+ * spring的织入处理器，配合AspectJWeavingEnabler实现了AOP
  */
 public class LoadTimeWeaverAwareProcessor implements BeanPostProcessor, BeanFactoryAware {
 

@@ -26,6 +26,7 @@ import java.lang.instrument.Instrumentation;
  * @author Juergen Hoeller
  * @since 2.0
  * @see org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver
+ *	java 的Instrumentation的保存
  */
 public final class InstrumentationSavingAgent {
 

@@ -29,6 +29,7 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
  * @author Juergen Hoeller
  * @since 3.0.1
  * @see org.springframework.context.annotation.ConfigurationClassPostProcessor
+ * 自定义注册BeanFactoryPostProcessor接口类，实现此类可以实现手动注册BeanFactoryPostProcessor，或者任何bean的注册
  */
 public interface BeanDefinitionRegistryPostProcessor extends BeanFactoryPostProcessor {
 
@@ -39,6 +40,8 @@ public interface BeanDefinitionRegistryPostProcessor extends BeanFactoryPostProc
 	 * bean definitions before the next post-processing phase kicks in.
 	 * @param registry the bean definition registry used by the application context
 	 * @throws org.springframework.beans.BeansException in case of errors
+	 * 在标准初始化之后修改应用程序上下文的内部bean定义注册表。所有常规bean定义都已加载，
+	 * 但还没有实例化bean。这允许在下一个后期处理阶段开始之前添加进一步的bean定义。
 	 */
 	void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException;
 

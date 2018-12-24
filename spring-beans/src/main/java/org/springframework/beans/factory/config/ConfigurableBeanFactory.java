@@ -112,6 +112,7 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 
 	/**
 	 * Return the temporary ClassLoader to use for type matching purposes,
+	 * 返回类型匹配的临时加载器
 	 * if any.
 	 * @since 2.5
 	 */

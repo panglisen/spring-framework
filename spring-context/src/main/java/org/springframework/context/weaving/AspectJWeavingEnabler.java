@@ -87,6 +87,7 @@ public class AspectJWeavingEnabler
 			@Nullable LoadTimeWeaver weaverToUse, @Nullable ClassLoader beanClassLoader) {
 
 		if (weaverToUse == null) {
+			//此时已经被初始化为DefaultContextLoadTimeWeaver
 			if (InstrumentationLoadTimeWeaver.isInstrumentationAvailable()) {
 				weaverToUse = new InstrumentationLoadTimeWeaver(beanClassLoader);
 			}
@@ -94,8 +95,10 @@ public class AspectJWeavingEnabler
 				throw new IllegalStateException("No LoadTimeWeaver available");
 			}
 		}
+		//使用DefaultContextLoadTimeWeaver类型的bean中的loadTimeWeaver属性注册转换器
 		weaverToUse.addTransformer(
 				new AspectJClassBypassingClassFileTransformer(new ClassPreProcessorAgentAdapter()));
+		//ClassPreProcessorAgentAdapter主要工作是解析aop.xml文件，解析类中的Aspect注解，并且根据解析结果来生成转换后的字节码
 	}
 
 
@@ -119,6 +122,7 @@ public class AspectJWeavingEnabler
 			if (className.startsWith("org.aspectj") || className.startsWith("org/aspectj")) {
 				return classfileBuffer;
 			}
+			//委托给AspectJ代理继续处理，最终会调用ClassPreProcessorAgentAdapter的transform方法执行字节码转换逻辑
 			return this.delegate.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
 		}
 	}
